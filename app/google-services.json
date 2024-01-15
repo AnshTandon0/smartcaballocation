@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "396027588142",
+    "project_id": "smart-cab-allocation-8916b",
+    "storage_bucket": "smart-cab-allocation-8916b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396027588142:android:b535d0b3a65ec0554df9bf",
+        "android_client_info": {
+          "package_name": "com.androidants.smartcaballocation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPiyPAr8c4wIWScJcRjwEMQdhj2oHsUbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
