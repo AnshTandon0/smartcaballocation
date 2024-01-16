@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Smart Cab Allocation</string>
+    <string name="enter_details">Enter Details</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="enter_your_email">Enter your Email</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="enter_your_number">Enter your Number</string>
+    <string name="new_user">New User ?</string>
+    <string name="already_registered">Already registered ?</string>
+    <string name="rent_car">Rent Car</string>
+    <string name="log_out">Log Out</string>
+    <string name="home">Home</string>
+    <string name="my_bookings">My Bookings</string>
+    <string name="profile">Profile</string>
 </resources>
