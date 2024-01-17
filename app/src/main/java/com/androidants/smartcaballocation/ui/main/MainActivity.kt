@@ -9,9 +9,9 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), OnClickListener {
+class MainActivity : AppCompatActivity(), OnClickListener , DriverRecyclerAdapter.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainActivityViewModel
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             it?.let {
                 sortedList = getSortedList(it)
             }
-            recyclerAdapter = DriverRecyclerAdapter(sortedList, this , selected)
+            recyclerAdapter = DriverRecyclerAdapter(sortedList, this , selected , this)
             binding.recyclerView.adapter = recyclerAdapter
         }
         viewModel.logoutStatus.observe(this){
@@ -112,6 +112,13 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 startActivity(Intent(this , SplashActivity::class.java))
                 finish()
             }
+        }
+        viewModel.setDriverStatus.observe(this) {
+            if (it) {
+                Toast.makeText(this, "Driver Booked Successfully", Toast.LENGTH_SHORT).show()
+                checkPermission()
+            } else
+                Toast.makeText(this, "Error while Booking . Try again", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -241,6 +248,28 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
             viewModel.logout()
         }
+    }
+
+    private fun createAlertDialog(driver: Driver)
+    {
+        AlertDialog.Builder(this)
+            .setTitle("Book Cab")
+            .setMessage("Are you sure you want to book this Cab?")
+            .setPositiveButton(
+                "Yes"
+            ) { dialog, which ->
+               lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
+                   viewModel.setDriver(driver)
+               }
+            }
+            .setNegativeButton("No", null)
+            .setIcon(R.drawable.ic_baseline_car_rental_24)
+            .show()
+    }
+
+    override fun bookCab(driver: Driver) {
+        driver.status = 1
+        createAlertDialog(driver)
     }
 
 }

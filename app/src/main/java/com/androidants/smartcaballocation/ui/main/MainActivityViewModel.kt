@@ -14,10 +14,12 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val getDriversUseCase: GetDriversUseCase ,
     private val reverseGeoCodeUseCase: ReverseGeoCodeUseCase ,
-    private val logOutUseCase: LogOutUseCase
+    private val logOutUseCase: LogOutUseCase,
+    private val setDriverUseCase: SetDriverUseCase
 ) : ViewModel() {
 
     private var _driverList = MutableLiveData<List<Driver>?>()
+    private var _setDriverStatus = MutableLiveData<Boolean>()
     private var _geocodeResponse = MutableLiveData<GeoCodeResponse>()
     private var _logoutStatus = MutableLiveData<Boolean>()
     val driverList : MutableLiveData<List<Driver>?> by lazy {
@@ -28,6 +30,9 @@ class MainActivityViewModel @Inject constructor(
     }
     val logoutStatus : MutableLiveData<Boolean> by lazy {
         _logoutStatus
+    }
+    val setDriverStatus : MutableLiveData<Boolean> by lazy {
+        _setDriverStatus
     }
     var loadingStatus = MutableLiveData<Int>()
 
@@ -50,4 +55,9 @@ class MainActivityViewModel @Inject constructor(
         loadingStatus.postValue(View.GONE)
     }
 
+    suspend fun setDriver(driver: Driver){
+        loadingStatus.postValue( View.VISIBLE )
+        _setDriverStatus.postValue(setDriverUseCase.invoke(driver))
+        loadingStatus.postValue( View.GONE )
+    }
 }

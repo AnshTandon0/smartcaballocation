@@ -12,7 +12,12 @@ import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.data.model.Driver
 import com.androidants.smartcaballocation.databinding.DriverCardBinding
 
-class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val status : Int ) :
+class DriverRecyclerAdapter(
+    val list: List<Driver>,
+    val context: Context,
+    val status: Int,
+    val onClickListener: OnClickListener
+) :
     RecyclerView.Adapter<DriverRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,19 +29,24 @@ class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val s
         holder.name.text = list[position].name
         holder.phone.text = list[position].phone
         holder.distance.text = list[position].distance.toString() + " km away"
-        if ( position == 0 && status == 0 )
+        if (position == 0 && status == 0)
             holder.cardView.visibility = View.VISIBLE
 
-        if ( status == 1 )
-        {
+        if (status == 1) {
             holder.cardView.visibility = View.VISIBLE
-            if ( list[position].status == 1 )
-            {
-                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange))
+            if (list[position].status == 1) {
+                holder.cardView.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.orange
+                    )
+                )
                 holder.text.text = "Busy"
-            }
-            else
+            } else
                 holder.text.text = "Free"
+        }
+        holder.parent.setOnClickListener{
+            onClickListener.bookCab(list[position])
         }
     }
 
@@ -49,6 +59,11 @@ class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val s
         val phone: TextView = itemView.findViewById(R.id.number)
         val distance: TextView = itemView.findViewById(R.id.distance)
         val text: TextView = itemView.findViewById(R.id.text)
-        val cardView : CardView = itemView.findViewById(R.id.card_view)
+        val cardView: CardView = itemView.findViewById(R.id.card_view)
+        val parent :CardView = itemView.findViewById(R.id.cardView)
+    }
+
+    interface OnClickListener {
+        fun bookCab(driver: Driver)
     }
 }

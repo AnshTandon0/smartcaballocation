@@ -1,7 +1,7 @@
 package com.androidants.smartcaballocation.data.model
 
 data class Driver(
-    val name : String = "" ,
+    val name : String = "",
     val email : String = "",
     val phone : String = "",
     val latitute : Float = 0f,
@@ -10,8 +10,8 @@ data class Driver(
     val state : String = "",
     val city : String  = "",
     val pincode : String = "",
-    var distance : Double = 0.0 ,
-    val status : Int = 0
+    var distance : Double = 0.0,
+    var status : Int = 0
 )
 
 // status  0-available , 1- busy
