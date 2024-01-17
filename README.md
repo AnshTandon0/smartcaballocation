@@ -8,12 +8,12 @@ The Cab Allocation System is a comprehensive solution that seamlessly connects u
 ### User Authentication
 
 User authentication is implemented through a secure email and password system.
-Users are required to authenticate themselves, enhancing the security of the system and ensuring that only authorized individuals can access and use the service.
+Users are required to authenticate themselves, maintaining the security of the system and ensuring that only authorized individuals can access and use the service.
 
 ### User Interface
 
 A user-friendly interface provides users with real-time information on available and free cabs.
-Users can also securely log in, view their ride history, and manage their account settings through the authenticated interface.
+Users can also securely log in, view available cabs , and book them through the authenticated interface.
 
 ### Cab Data Storage
 
@@ -21,8 +21,8 @@ Drivers are categorized and stored based on their current location pincode, faci
 
 ### Allocation Algorithm
 
-Upon receiving a ride request, the system utilizes an advanced allocation algorithm that considers real-time driver locations, calculating the distance to determine the most suitable driver.
-The nearest available driver is automatically assigned to fulfill the user's request, optimizing efficiency.
+Upon receiving a ride request, the system utilizes an advanced allocation algorithm that considers real-time driver locations of drivers at same pincode , calculating the distance to determine the most suitable driver.
+The nearest available driver is automatically recommended to the user , optimizing efficiency.
 
 
 ### Geolocation API Integration
@@ -70,7 +70,7 @@ Real-time Location Data Integration is a critical aspect of our cab allocation s
 
 #### Working
 
-- The Real-time Location Data Integration relies on Mapbox APIs to seamlessly convert latitude and longitude coordinates into human-readable textual addresses.
+- The Real-time Location Data Integration relies on Reverse GeoCoding APIs to seamlessly convert latitude and longitude coordinates into human-readable textual addresses.
 - Live tracking ensures that administrators, drivers, and users have access to real-time updates on the current location of cabs, facilitating efficient management of the transportation network.
 
 ## Conclusion
