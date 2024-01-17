@@ -11,10 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.androidants.smartcaballocation.ui.main.MainActivity
 import com.androidants.smartcaballocation.R
+import com.androidants.smartcaballocation.common.Constants
 import com.androidants.smartcaballocation.data.model.User
 import com.androidants.smartcaballocation.databinding.ActivityRegisterBinding
 import com.androidants.smartcaballocation.ui.authentication.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -52,7 +54,7 @@ class RegisterActivity : AppCompatActivity() ,OnClickListener {
             binding.editTextPassword.error = "must be > 6 characters"
             return
         }
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
             viewModel.register(binding.editTextEmail.text.toString() , binding.editTextPassword.text.toString())
         }
     }
@@ -73,11 +75,14 @@ class RegisterActivity : AppCompatActivity() ,OnClickListener {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
+        viewModel.loadingStatus.observe(this){
+            binding.progressBar.visibility = it
+        }
         viewModel.registerStatus.observe(this){
             if (!it)
                 Toast.makeText(this , "Error while registering . Try again" , Toast.LENGTH_SHORT).show()
             else {
-                lifecycleScope.launch {
+                lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
                     viewModel.createUser(getUser())
                 }
             }

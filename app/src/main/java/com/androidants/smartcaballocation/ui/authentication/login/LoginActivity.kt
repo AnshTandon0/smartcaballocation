@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.androidants.smartcaballocation.ui.main.MainActivity
 import com.androidants.smartcaballocation.R
+import com.androidants.smartcaballocation.common.Constants
 import com.androidants.smartcaballocation.databinding.ActivityLoginBinding
 import com.androidants.smartcaballocation.ui.authentication.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,6 +35,9 @@ class LoginActivity : AppCompatActivity() , OnClickListener {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel.loadingStatus.observe(this){
+            binding.progressBar.visibility = it
+        }
         viewModel.loginStatus.observe(this){
             if (!it)
                 Toast.makeText(this , "Incorrect email And Password" , Toast.LENGTH_SHORT).show()
@@ -57,7 +62,7 @@ class LoginActivity : AppCompatActivity() , OnClickListener {
             binding.editTextPassword.error = "must be > 6 characters"
             return
         }
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
             viewModel.login(binding.editTextEmail.text.toString() , binding.editTextPassword.text.toString())
         }
     }

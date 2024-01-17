@@ -56,16 +56,20 @@ class MainRepositoryImpl @Inject constructor(
         return result.result?.toObject(User::class.java)
     }
 
-    override suspend fun setLocation(driver: Driver): Boolean {
+    override suspend fun setDriver(driver: Driver): Boolean {
         val result = firestore.collection("Location")
             .document("Driver").collection(driver.pincode).document(driver.email).set(driver)
         return result.isSuccessful
     }
 
-    override suspend fun getLocations(pincode: String): List<Driver>? {
+    override suspend fun getDrivers(pincode: String): List<Driver>? {
         val result = firestore.collection("Location")
             .document("Driver").collection(pincode).get().await()
         return result.toObjects(Driver::class.java)
+    }
+
+    override suspend fun getAllDrivers(): List<Driver>? {
+        TODO("Not yet implemented")
     }
 
     override suspend fun reverseGeocode(lat: Double, lon: Double, apiKey: String): GeoCodeResponse {

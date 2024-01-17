@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.data.model.Driver
 import com.androidants.smartcaballocation.databinding.DriverCardBinding
-import kotlin.math.pow
-import kotlin.math.sqrt
 
-class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val lat1: Float , val lon1: Float) :
+class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val status : Int ) :
     RecyclerView.Adapter<DriverRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,7 +23,21 @@ class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val l
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.text = list[position].name
         holder.phone.text = list[position].phone
-        holder.distance.text = calculateDistance(lat1 , lon1 , list[position].latitute , list[position].longitude)
+        holder.distance.text = list[position].distance.toString() + " km away"
+        if ( position == 0 && status == 0 )
+            holder.cardView.visibility = View.VISIBLE
+
+        if ( status == 1 )
+        {
+            holder.cardView.visibility = View.VISIBLE
+            if ( list[position].status == 1 )
+            {
+                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange))
+                holder.text.text = "Busy"
+            }
+            else
+                holder.text.text = "Free"
+        }
     }
 
     override fun getItemCount(): Int {
@@ -34,11 +48,7 @@ class DriverRecyclerAdapter(val list: List<Driver>, val context: Context , val l
         val name: TextView = itemView.findViewById(R.id.name)
         val phone: TextView = itemView.findViewById(R.id.number)
         val distance: TextView = itemView.findViewById(R.id.distance)
-    }
-
-    private fun calculateDistance(lat1: Float, lat2: Float, lon1: Float, lon2: Float) : String {
-        val lat = (lat2-lat1).pow(2)
-        val lon = (lon1-lon2).pow(2)
-        return sqrt(lat+lon).toString()
+        val text: TextView = itemView.findViewById(R.id.text)
+        val cardView : CardView = itemView.findViewById(R.id.card_view)
     }
 }

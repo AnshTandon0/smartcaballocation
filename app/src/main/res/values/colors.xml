@@ -11,4 +11,5 @@
     <color name="text_color_primary">#003443</color>
     <color name="blue_500">#289FEF</color>
     <color name="blue_700">#6765E8</color>
+    <color name="orange">#FF9100</color>
 </resources>

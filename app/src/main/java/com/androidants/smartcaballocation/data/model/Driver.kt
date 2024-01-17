@@ -10,4 +10,8 @@ data class Driver(
     val state : String = "",
     val city : String  = "",
     val pincode : String = "",
+    var distance : Double = 0.0 ,
+    val status : Int = 0
 )
+
+// status  0-available , 1- busy

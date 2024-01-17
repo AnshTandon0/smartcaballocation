@@ -3,6 +3,7 @@ package com.androidants.smartcaballocation.ui.main
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -21,6 +23,7 @@ import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.common.Constants
 import com.androidants.smartcaballocation.data.model.Driver
 import com.androidants.smartcaballocation.databinding.ActivityMainBinding
+import com.androidants.smartcaballocation.ui.splash.SplashActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -35,20 +38,55 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private var currentLocation: Location? = null
     private lateinit var locationManager: LocationManager
     private lateinit var recyclerAdapter: DriverRecyclerAdapter
+    private var selected = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setUI()
         initViewModel()
         checkPermission()
-        binding.back.setOnClickListener(this)
+    }
+
+    private fun setUI (){
+        val actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+        actionBarDrawerToggle.drawerArrowDrawable.color = ContextCompat.getColor(this, R.color.white)
+
+        binding.navView.setNavigationItemSelectedListener {
+                when(it.itemId)
+                {
+                    R.id.home -> {
+                        startActivity(Intent(this , MainActivity::class.java))
+                        true
+                    }
+                    R.id.logout -> {
+                        logout()
+                        true
+                    }
+
+                    else -> false
+                }
+        }
+        binding.cardAll.setOnClickListener(this)
+        binding.cardFree.setOnClickListener(this)
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        viewModel.loadingStatus.observe(this){
+            binding.progressBar.visibility = it
+        }
         viewModel.geocodeResponse.observe(this) {
-            Log.d("yyyyyyyy" , currentLocation?.latitude.toString())
             it.features[0].properties?.postcode.let {
                 lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
                     viewModel.getDrivers(it ?: "262701")
@@ -56,22 +94,27 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             }
         }
         viewModel.driverList.observe(this) {
-            recyclerAdapter = DriverRecyclerAdapter(
-                it ?: emptyList(),
-                this,
-                currentLocation?.latitude?.toFloat() ?: 0f,
-                currentLocation?.longitude?.toFloat() ?: 0f
-            )
+            var sortedList = emptyList<Driver>()
+            it?.let {
+                sortedList = getSortedList(it)
+            }
+            recyclerAdapter = DriverRecyclerAdapter(sortedList, this , selected)
             binding.recyclerView.adapter = recyclerAdapter
         }
-        viewModel.setDriverStatus.observe(this){
-            lifecycleScope.launch(Dispatchers.IO) {
-                Log.d("yyyyyyyy" , currentLocation?.latitude.toString())
+        viewModel.setDriverStatus.observe(this) {
+            lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
+                Log.d("yyyyyyyy", currentLocation?.latitude.toString())
                 viewModel.reverseGeocode(
                     currentLocation?.latitude ?: 0.0,
                     currentLocation?.longitude ?: 0.0,
                     Constants.API_KEY
                 )
+            }
+        }
+        viewModel.logoutStatus.observe(this){
+            if (it) {
+                startActivity(Intent(this , SplashActivity::class.java))
+                finish()
             }
         }
     }
@@ -84,7 +127,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
             currentLocation =
                 locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            lifecycleScope.launch(Dispatchers.IO ) {
+            lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
                 viewModel.reverseGeocode(
                     currentLocation?.latitude ?: 0.0,
                     currentLocation?.longitude ?: 0.0,
@@ -149,23 +192,74 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.back -> {
-//                finish()
-                    lifecycleScope.launch (Dispatchers.IO + Constants.coroutineExceptionHandler) {
-                        viewModel.setDriver(
-                            Driver("Driver 1" ,
-                                "abc@gmail.com" ,
-                                "1234567890",
-                                23.8168f ,
-                                86.4432f ,
-                                "India" ,
-                                "JharKhand" ,
-                                "Dhanbad" ,
-                                "826005"
-                            )
-                        )
-                    }
+//            R.id.back -> {
+////                finish()
+//                lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
+//                    viewModel.setDriver(
+//                        Driver(
+//                            "Driver 2",
+//                            "def@gmail.com",
+//                            "111111111",
+//                            23.8150757f,
+//                            86.4398926f,
+//                            "India",
+//                            "JharKhand",
+//                            "Dhanbad",
+//                            "826004"
+//                        )
+//                    )
+//                }
+//            }
+            R.id.card_all -> {
+                selected = 1
+                binding.cardAll.setCardBackgroundColor(ContextCompat.getColor(this, R.color.orange))
+                binding.cardFree.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue_500))
+                checkPermission()
+            }
+
+            R.id.card_free -> {
+                selected = 0
+                binding.cardAll.setCardBackgroundColor(ContextCompat.getColor(this, R.color.blue_500))
+                binding.cardFree.setCardBackgroundColor(ContextCompat.getColor(this, R.color.orange))
+                checkPermission()
             }
         }
     }
+
+    private fun getSortedList(list: List<Driver>) : List<Driver> {
+
+        val lat = currentLocation?.latitude ?: 0.0
+        val lon = currentLocation?.longitude ?: 0.0
+
+        list.forEach {
+            it.distance = calculateDistance(lat , lon , it.latitute.toDouble() , it.longitude.toDouble())
+        }
+
+        return list.sortedBy { it.distance }
+    }
+
+    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val R = 6371 // Radius of the earth in km
+        val dLat = deg2rad(lat2-lat1)
+        val dLon = deg2rad(lon2-lon1)
+        val a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+        val d = R * c // Distance in km
+        return String.format("%.3f", d).toDouble()
+    }
+
+    private fun deg2rad(deg: Double): Double {
+        return deg * Math.PI / 180.0
+    }
+
+    private fun logout()
+    {
+        lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
+            viewModel.logout()
+        }
+    }
+
 }

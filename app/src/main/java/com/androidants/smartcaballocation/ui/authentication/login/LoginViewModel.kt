@@ -1,5 +1,6 @@
 package com.androidants.smartcaballocation.ui.authentication.login
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.androidants.smartcaballocation.ui.usecases.LoginUseCase
@@ -15,10 +16,13 @@ class LoginViewModel @Inject constructor(
     val loginStatus : MutableLiveData<Boolean> by lazy {
         _loginStatus
     }
+    var loadingStatus = MutableLiveData<Int>()
 
     suspend fun login ( email : String , password : String )
     {
-        _loginStatus.value = loginUseCase.invoke(email , password)
+        loadingStatus.postValue( View.VISIBLE )
+        _loginStatus.postValue(loginUseCase.invoke(email , password))
+        loadingStatus.postValue(View.GONE)
     }
 
 }

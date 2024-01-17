@@ -25,9 +25,11 @@ interface MainRepository {
 
     // user location
 
-    suspend fun setLocation(driver : Driver ) : Boolean
+    suspend fun setDriver(driver : Driver ) : Boolean
 
-    suspend fun getLocations(pincode: String) : List<Driver>?
+    suspend fun getDrivers(pincode: String) : List<Driver>?
+
+    suspend fun getAllDrivers(): List<Driver>?
 
 
     // revert geocoding

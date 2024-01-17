@@ -8,6 +8,6 @@ class SetDriverUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend fun invoke (driver: Driver) : Boolean {
-        return repository.setLocation(driver)
+        return repository.setDriver(driver)
     }
 }

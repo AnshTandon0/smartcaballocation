@@ -1,5 +1,6 @@
 package com.androidants.smartcaballocation.ui.authentication.register
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.androidants.smartcaballocation.data.model.User
@@ -21,15 +22,19 @@ class RegisterViewModel @Inject constructor(
     val createUserStatus : MutableLiveData<Boolean> by lazy {
         _createUserStatus
     }
-
+    var loadingStatus = MutableLiveData<Int>()
 
     suspend fun register(email: String , password: String) {
-        _registerStatus.value = registerUseCase.invoke(email , password)
+        loadingStatus.postValue( View.VISIBLE )
+        _registerStatus.postValue(registerUseCase.invoke(email , password))
+        loadingStatus.postValue( View.GONE )
     }
 
     suspend fun createUser( user: User )
     {
-        _createUserStatus.value = setUserUseCase.invoke(user)
+        loadingStatus.postValue( View.VISIBLE )
+        _createUserStatus.postValue(setUserUseCase.invoke(user))
+        loadingStatus.postValue( View.GONE )
     }
 
 }
