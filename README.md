@@ -3,7 +3,16 @@
 ## Introduction
 The Cab Allocation System is a comprehensive solution that seamlessly connects users with available drivers, employing a combination of efficient driver categorization, geolocation services, and secure user authentication. This system enhances the overall user experience by ensuring not only optimal cab allocation but also prioritizing user security through email and password authentication.
 
-![Application logo](https://drive.google.com/file/d/11sUkHT4S6KrNjPTBapnkjopMuLS3D1cU/view?usp=sharing "Application Logo")
+## DB Modals
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/0d5ac882-4882-4418-a18f-83e64e8beb8d"  width="1200" height="500">
+
+## App Logo
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/510b706a-13d9-4bf6-a858-a48eddd13f9a"  width="300" height="300">
+
+## Application Link
+```
+https://drive.google.com/file/d/15bKqkTXRF6FX6v4skVbeN8yZmN07DMK9/view?usp=drive_link
+```
 
 ## Features of the App
 
@@ -33,8 +42,9 @@ The system integrates a geolocation API to convert latitude and longitude coordi
 This feature enhances user understanding of the location of available cabs and their own pickup point.
 
 ## Working Demo
-
-// link
+```
+https://drive.google.com/file/d/18RTAwmqi5i2SoGDWEWMCsq5x2k34RGkZ/view?usp=drive_link
+```
 
 ## Key Components of the Application
 
@@ -46,8 +56,8 @@ The Admin's Cab Allocation Optimization module is a crucial component within our
 - **Dynamic Allocation Algorithms** : Advanced algorithms enable the system to dynamically allocate cabs. This ensures optimal utilization of resources and minimizes response times.
 
 #### Working:
-
-// add how it works.
+- Cab Location are stored according to postcode ( horizontal partitioning of data ) , so according to the current user postcode , all the cabs currently at that postcode are shown .
+- The distance for all the cabs is calculated using haversine formula , and the cab at least distance is recommended . 
 
 
 ### Employee's Cab Search Optimizaztion
@@ -59,7 +69,8 @@ The Employee's Cab Search Optimization feature is designed to streamline the pro
 
 
 #### Working
-//
+- As Cabs are stored accoding to the postcode , so this actually enhances the search , saving a lot of time , as only the specific collection need to be read .
+- The Users latitude and longitude is reverse geocoded to get postcode which is actually used to fetch cabs .
 
 
 ### Realtime Location Data Integration
