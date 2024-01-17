@@ -23,6 +23,7 @@ import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.common.Constants
 import com.androidants.smartcaballocation.data.model.Driver
 import com.androidants.smartcaballocation.databinding.ActivityMainBinding
+import com.androidants.smartcaballocation.ui.addDriver.AddDriver
 import com.androidants.smartcaballocation.ui.splash.SplashActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,6 +75,11 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                         true
                     }
 
+                    R.id.add_driver -> {
+                        startActivity(Intent(this , AddDriver :: class.java))
+                        true
+                    }
+
                     else -> false
                 }
         }
@@ -100,16 +106,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             }
             recyclerAdapter = DriverRecyclerAdapter(sortedList, this , selected)
             binding.recyclerView.adapter = recyclerAdapter
-        }
-        viewModel.setDriverStatus.observe(this) {
-            lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
-                Log.d("yyyyyyyy", currentLocation?.latitude.toString())
-                viewModel.reverseGeocode(
-                    currentLocation?.latitude ?: 0.0,
-                    currentLocation?.longitude ?: 0.0,
-                    Constants.API_KEY
-                )
-            }
         }
         viewModel.logoutStatus.observe(this){
             if (it) {
@@ -192,24 +188,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-//            R.id.back -> {
-////                finish()
-//                lifecycleScope.launch(Dispatchers.IO + Constants.coroutineExceptionHandler) {
-//                    viewModel.setDriver(
-//                        Driver(
-//                            "Driver 2",
-//                            "def@gmail.com",
-//                            "111111111",
-//                            23.8150757f,
-//                            86.4398926f,
-//                            "India",
-//                            "JharKhand",
-//                            "Dhanbad",
-//                            "826004"
-//                        )
-//                    )
-//                }
-//            }
             R.id.card_all -> {
                 selected = 1
                 binding.cardAll.setCardBackgroundColor(ContextCompat.getColor(this, R.color.orange))
@@ -230,12 +208,15 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         val lat = currentLocation?.latitude ?: 0.0
         val lon = currentLocation?.longitude ?: 0.0
-
+        val listCpy = mutableListOf<Driver>()
         list.forEach {
-            it.distance = calculateDistance(lat , lon , it.latitute.toDouble() , it.longitude.toDouble())
+            if ( (selected == 0 && it.status == 0) || selected == 1 ) {
+                it.distance = calculateDistance(lat , lon , it.latitute.toDouble() , it.longitude.toDouble())
+                listCpy.add(it)
+            }
         }
 
-        return list.sortedBy { it.distance }
+        return listCpy.sortedBy { it.distance }
     }
 
     private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

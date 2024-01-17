@@ -8,9 +8,9 @@
             android:title="@string/home" />
 
         <item
-            android:id="@+id/all_drivers"
+            android:id="@+id/add_driver"
             android:icon="@drawable/ic_baseline_car_rental_24"
-            android:title="@string/all_drivers" />
+            android:title="@string/add_driver" />
 
         <item
             android:id="@+id/profile"

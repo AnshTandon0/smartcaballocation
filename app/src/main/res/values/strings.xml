@@ -23,4 +23,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="all_drivers">All Drivers</string>
     <string name="free_drivers">Free Drivers</string>
+    <string name="add_driver">Add Driver</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="enter_the_longitude">Enter the Longitude</string>
+    <string name="enter_the_latitude">Enter the Latitude</string>
 </resources>

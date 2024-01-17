@@ -47,8 +47,8 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun setUserDetail(user: User): Boolean {
-        val result = firestore.collection("User").document(user.email).set(user)
-        return result.isSuccessful
+        val result = firestore.collection("User").document(user.email).set(user).await()
+        return true
     }
 
     override suspend fun getUserDetail(email: String) : User?  {
@@ -58,8 +58,8 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun setDriver(driver: Driver): Boolean {
         val result = firestore.collection("Location")
-            .document("Driver").collection(driver.pincode).document(driver.email).set(driver)
-        return result.isSuccessful
+            .document("Driver").collection(driver.pincode).document(driver.email).set(driver).await()
+        return true
     }
 
     override suspend fun getDrivers(pincode: String): List<Driver>? {

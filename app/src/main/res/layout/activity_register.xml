@@ -85,7 +85,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:background="@android:color/transparent"
-                        android:hint="@string/enter_your_email"
+                        android:hint="@string/enter_your_name"
                         android:textColor="@color/text_color_primary"
                         android:textColorHint="@color/shade_grey"
                         android:textSize="18sp"
