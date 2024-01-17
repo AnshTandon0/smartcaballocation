@@ -1,13 +1,14 @@
 package com.androidants.smartcaballocation.data.model
 
-import java.util.jar.Attributes.Name
+import android.os.Parcelable
+
 
 data class User(
-    val name : String ,
-    val phone : String ,
-    val email : String ,
-    val type : Int
-)
+    var name : String ,
+    var phone : String ,
+    var email : String ,
+    var type : Int
+) : java.io.Serializable
 
 // Type
 // 0 - User

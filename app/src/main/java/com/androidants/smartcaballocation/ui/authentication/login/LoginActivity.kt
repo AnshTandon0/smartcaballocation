@@ -9,11 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.androidants.smartcaballocation.MainActivity
+import com.androidants.smartcaballocation.ui.main.MainActivity
 import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.databinding.ActivityLoginBinding
 import com.androidants.smartcaballocation.ui.authentication.register.RegisterActivity
-import com.androidants.smartcaballocation.ui.splash.SplashViewModal
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

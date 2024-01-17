@@ -1,9 +1,13 @@
 package com.androidants.smartcaballocation.data.repository
 
-import androidx.lifecycle.MutableLiveData
+import com.androidants.smartcaballocation.data.model.Driver
+import com.androidants.smartcaballocation.data.model.GeoCodeResponse
 import com.androidants.smartcaballocation.data.model.User
 
+
 interface MainRepository {
+
+    // authentication
 
     suspend fun checkUserAuthStatus() : Boolean
 
@@ -13,6 +17,21 @@ interface MainRepository {
 
     suspend fun logout() : Boolean
 
-    suspend fun addUserDetail(user: User) : Boolean
+    // user profile details
+
+    suspend fun setUserDetail(user: User) : Boolean
+
+    suspend fun getUserDetail(email: String) : User?
+
+    // user location
+
+    suspend fun setLocation(driver : Driver ) : Boolean
+
+    suspend fun getLocations(pincode: String) : List<Driver>?
+
+
+    // revert geocoding
+
+    suspend fun reverseGeocode (lat : Double , lon : Double , apiKey : String) : GeoCodeResponse
 
 }

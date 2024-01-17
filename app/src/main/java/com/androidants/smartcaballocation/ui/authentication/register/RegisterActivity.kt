@@ -9,12 +9,11 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.androidants.smartcaballocation.MainActivity
+import com.androidants.smartcaballocation.ui.main.MainActivity
 import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.data.model.User
 import com.androidants.smartcaballocation.databinding.ActivityRegisterBinding
 import com.androidants.smartcaballocation.ui.authentication.login.LoginActivity
-import com.androidants.smartcaballocation.ui.authentication.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -96,7 +95,9 @@ class RegisterActivity : AppCompatActivity() ,OnClickListener {
     private fun getUser(): User {
         return User( binding.editTextName.text.toString() ,
             binding.editTextEmail.text.toString() ,
-            binding.editTextPhone.text.toString() , 0)
+            binding.editTextPhone.text.toString() ,
+            0
+        )
     }
 
 }

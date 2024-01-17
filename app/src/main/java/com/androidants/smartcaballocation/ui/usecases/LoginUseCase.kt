@@ -1,4 +1,4 @@
-package com.androidants.smartcaballocation.ui.authentication.login.usecases
+package com.androidants.smartcaballocation.ui.usecases
 
 import com.androidants.smartcaballocation.data.repository.MainRepository
 import javax.inject.Inject

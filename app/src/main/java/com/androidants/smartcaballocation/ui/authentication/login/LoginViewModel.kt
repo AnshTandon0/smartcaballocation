@@ -2,7 +2,7 @@ package com.androidants.smartcaballocation.ui.authentication.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.androidants.smartcaballocation.ui.authentication.login.usecases.LoginUseCase
+import com.androidants.smartcaballocation.ui.usecases.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

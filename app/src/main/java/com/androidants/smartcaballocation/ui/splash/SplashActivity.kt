@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.androidants.smartcaballocation.ui.main.MainActivity
 import com.androidants.smartcaballocation.R
 import com.androidants.smartcaballocation.ui.authentication.register.RegisterActivity
-import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +29,10 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun initAnimation(auth : Boolean) {
-       startActivity(Intent(this , RegisterActivity::class.java))
-       finish()
+        if ( auth )
+            startActivity(Intent(this , MainActivity::class.java))
+        else
+            startActivity(Intent(this , RegisterActivity::class.java))
+        finish()
     }
 }
