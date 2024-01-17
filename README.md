@@ -3,6 +3,8 @@
 ## Introduction
 The Cab Allocation System is a comprehensive solution that seamlessly connects users with available drivers, employing a combination of efficient driver categorization, geolocation services, and secure user authentication. This system enhances the overall user experience by ensuring not only optimal cab allocation but also prioritizing user security through email and password authentication.
 
+![Application logo](https://drive.google.com/file/d/11sUkHT4S6KrNjPTBapnkjopMuLS3D1cU/view?usp=sharing "Application Logo")
+
 ## Features of the App
 
 ### User Authentication
@@ -72,6 +74,18 @@ Real-time Location Data Integration is a critical aspect of our cab allocation s
 
 - The Real-time Location Data Integration relies on Reverse GeoCoding APIs to seamlessly convert latitude and longitude coordinates into human-readable textual addresses.
 - Live tracking ensures that administrators, drivers, and users have access to real-time updates on the current location of cabs, facilitating efficient management of the transportation network.
+
+### TechStack and Libraries Used :
+
+* Android Studio (Kotlin + XML)
+* Retrofit
+* MVVM
+* Hilt
+* Dagger
+* Coroutines
+* Reverse Geocoding API
+* Firebase Auth
+* FireStore
 
 ## Conclusion
 
