@@ -3,7 +3,7 @@
 ## Introduction
 The Cab Allocation System is a comprehensive solution that seamlessly connects users with available drivers, employing a combination of efficient driver categorization, geolocation services, and secure user authentication. This system enhances the overall user experience by ensuring not only optimal cab allocation but also prioritizing user security through email and password authentication.
 
-## DB Modals
+## DB Modal
 <img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/0d5ac882-4882-4418-a18f-83e64e8beb8d"  width="1200" height="500">
 
 ## App Logo
@@ -101,3 +101,14 @@ Real-time Location Data Integration is a critical aspect of our cab allocation s
 ## Conclusion
 
 The Cab Allocation System with User Authentication offers a robust solution for connecting users with the nearest available cabs while prioritizing security through email and password authentication. This holistic approach ensures an efficient, transparent, and secure user experience, enhancing overall user satisfaction and operational effectiveness.
+
+## Code Snippets
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/7c071ef6-e6fc-4503-969b-bb62f711a57b"  width="800" height="700">
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/4006b464-346d-4598-a64c-1e35bf7c9f8e"  width="800" height="700">
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/e7706cdc-d843-44b5-9ec4-1ab8e3538e88"  width="800" height="700">
+## App Screenshots
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/952ec7f7-90b8-47c2-b957-6af4a23de1fb"  width="300" height="700">
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/344a1051-b8e5-4628-a476-53c087f91039"  width="300" height="700">
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/1881effb-9808-4f8f-9e1e-22554db582a3"  width="300" height="700">
+<img src="https://github.com/AnshTandon0/smartcaballocation/assets/75798189/f0d6ea2c-6a9f-418b-9058-130d0a7781dd"  width="300" height="700">
+
